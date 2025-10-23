@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IMSS | Home</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+<style>
+  :root {
+    --primary-color: #100042;
+    --accent-color: #ff8308; /* base accent */
+    --secondary-color: #6939ee; /* base secondary */
+    --marketing-a: #ff8308;
+    --marketing-b: #ff4d2d;
+    --it-a: #00c2ff;
+    --it-b: #6939ee;
+    --text-color: #333333;
+    --bg-color: #f9fafc;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+  }
+
+  /* Blurred Navbar + Animated Accent */
+  nav.navbar {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    overflow: hidden; /* show animated accent */
+
+    /* Active gradient pair (defaults to marketing) */
+    --active-a: var(--marketing-a);
+    --active-b: var(--marketing-b);
+  }
+  /* Switchable themes for the navbar based on intent */
+  nav.navbar.it {
+    --active-a: var(--it-a);
+    --active-b: var(--it-b);
+  }
+  nav.navbar.marketing {
+    --active-a: var(--marketing-a);
+    --active-b: var(--marketing-b);
+  }
+
+  /* Animated gradient accent bar at the bottom of navbar */
+  nav.navbar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--active-a), var(--active-b));
+    background-size: 200% 100%;
+    animation: moveGradient 8s linear infinite;
+    opacity: 0.9;
+  }
+  @keyframes moveGradient {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  .navbar-brand img {
+    height: 40px;
+  }
+  .navbar-brand strong {
+    transition: color 0.3s ease;
+  }
+  /* Brand subtly reflects active theme on hover */
+  .navbar-brand strong:hover {
+    background: linear-gradient(90deg, var(--active-a), var(--active-b));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .navbar-nav .nav-link {
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-left: 1rem;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+  .navbar-nav .nav-link:hover,
+  .dropdown-item:hover {
+    color: var(--active-a);
+  }
+
+  /* Animated underline for nav links using the active theme gradient */
+  .navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--active-a), var(--active-b));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  .navbar-nav .nav-link:hover::after,
+  .navbar-nav .nav-link:focus::after,
+  .navbar-nav .nav-link.active::after {
+    transform: scaleX(1);
+  }
+
+  /* Small glowing spark next to Services that pulses with the active theme */
+  .services-spark {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--active-a), transparent 60%),
+                radial-gradient(circle at 70% 70%, var(--active-b), transparent 60%);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    animation: sparkPulse 2.8s ease-in-out infinite;
+    vertical-align: middle;
+  }
+  @keyframes sparkPulse {
+    0% { box-shadow: 0 0 0 rgba(0,0,0,0); transform: scale(1); }
+    50% { box-shadow: 0 0 16px rgba(0,0,0,0.12); transform: scale(1.08); }
+    100% { box-shadow: 0 0 0 rgba(0,0,0,0); transform: scale(1); }
+  }
+
+  /* Hero Section */
+  .hero {
+    padding: 100px 0;
+  }
+  .hero h1 {
+    font-weight: 700;
+    font-size: 2.8rem;
+    color: var(--primary-color);
+  }
+  .hero p {
+    color: #6c757d;
+  }
+  .btn-orange {
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  .btn-orange:hover {
+    background-color: #e57300;
+    transform: translateY(-2px);
+  }
+
+  /* Section Titles */
+  h2.section-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  /* Service Cards */
+  .service-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+    text-align: center;
+  }
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  }
+  .service-card i {
+    font-size: 45px;
+    color: var(--accent-color);
+  }
+  .service-card h5 {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-top: 15px;
+  }
+
+  /* Highlighted Underline */
+  .underline {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+    margin: 0.5rem auto 2rem;
+    border-radius: 2px;
+  }
+
+  /* Dropdown theming */
+  .dropdown-menu {
+    border: none;
+    box-shadow: 0 8px 24px rgba(16, 0, 66, 0.08);
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(8px);
+  }
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dropdown-item .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dropdown-item .swatch.marketing { background: linear-gradient(45deg, var(--marketing-a), var(--marketing-b)); }
+  .dropdown-item .swatch.it { background: linear-gradient(45deg, var(--it-a), var(--it-b)); }
+
+  /* Media Queries for Mobile */
+  @media (max-width: 768px) {
+    nav.navbar { padding: 0.5rem 0; }
+    .navbar-brand img { height: 30px; }
+    .navbar-nav .nav-link { margin-left: 0; padding: 0.5rem 1rem; }
+    .hero { padding: 60px 0; text-align: center; }
+    .hero h1 { font-size: 2rem; }
+    .hero img { max-width: 280px; margin-top: 20px; }
+    .service-card { padding: 20px; }
+    .service-card i { font-size: 35px; }
+    .dropdown-menu { background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg marketing">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="{{ asset('images/LogoNewWide.png') }}" alt="IMSS Logo" class="me-2" />
+      <strong style="color: var(--primary-color)">IMSS</strong>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"><i class="bi bi-list" style="font-size: 1.5rem; color: var(--primary-color)"></i></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Services <span class="services-spark" aria-hidden="true"></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+            <li>
+              <a class="dropdown-item" href="#" data-theme="it">
+                <span class="swatch it"></span>
+                <i class="bi bi-cpu"></i>
+                IT Services
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-theme="marketing">
+                <span class="swatch marketing"></span>
+                <i class="bi bi-megaphone-fill"></i>
+                Marketing Services
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h1>Infinity Marketing <br /> Services &amp; Solution</h1>
+        <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+        <a href="#" class="btn btn-orange mt-3">Get Started</a>
+      </div>
+      <div class="col-md-6 text-center">
+        <img src="{{ asset('images/hero-illustration.png') }}" alt="Marketing Illustration" class="img-fluid" style="max-width: 380px;" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Who We Are -->
+<section class="py-5 text-center">
+  <div class="container">
+    <h2 class="section-title">Who We Are</h2>
+    <div class="underline"></div>
+    <p class="text-muted mx-auto" style="max-width: 650px;">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="section-title text-center">Our Services</h2>
+    <div class="underline"></div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="service-card">
+          <i class="bi bi-bar-chart-fill"></i>
+          <h5>Marketing Strategy</h5>
+          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-card">
+          <i class="bi bi-megaphone-fill"></i>
+          <h5>Content Marketing</h5>
+          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-card">
+          <i class="bi bi-lightbulb-fill"></i>
+          <h5>SEO &amp; Analytics</h5>
+          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Theme switching logic for navbar accent based on hovered dropdown item
+  document.addEventListener('DOMContentLoaded', function () {
+    const navbar = document.querySelector('nav.navbar');
+    const servicesDropdownToggle = document.getElementById('servicesDropdown');
+    const servicesMenu = document.querySelector('ul[aria-labelledby="servicesDropdown"]');
+
+    if (!navbar || !servicesMenu) return;
+
+    const applyTheme = (theme) => {
+      navbar.classList.remove('marketing', 'it');
+      if (theme === 'marketing') navbar.classList.add('marketing');
+      if (theme === 'it') navbar.classList.add('it');
+    };
+
+    const marketingItem = servicesMenu.querySelector('[data-theme="marketing"]');
+    const itItem = servicesMenu.querySelector('[data-theme="it"]');
+
+    if (marketingItem) {
+      marketingItem.addEventListener('mouseenter', () => applyTheme('marketing'));
+      marketingItem.addEventListener('focus', () => applyTheme('marketing'));
+      marketingItem.addEventListener('click', () => applyTheme('marketing'));
+    }
+    if (itItem) {
+      itItem.addEventListener('mouseenter', () => applyTheme('it'));
+      itItem.addEventListener('focus', () => applyTheme('it'));
+      itItem.addEventListener('click', () => applyTheme('it'));
+    }
+
+    // Reset to default marketing theme when menu closes or mouse leaves the menu
+    servicesMenu.addEventListener('mouseleave', () => applyTheme('marketing'));
+
+    // Also hook into Bootstrap dropdown events
+    if (servicesDropdownToggle) {
+      servicesDropdownToggle.addEventListener('hidden.bs.dropdown', () => applyTheme('marketing'));
+    }
+  });
+</script>
+</body>
+</html>
